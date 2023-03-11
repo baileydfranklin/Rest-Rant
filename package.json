@@ -1,0 +1,23 @@
+{
+  "name": "rest-rant",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baileydfranklin/Rest-Rant.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/baileydfranklin/Rest-Rant/issues"
+  },
+  "homepage": "https://github.com/baileydfranklin/Rest-Rant#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
