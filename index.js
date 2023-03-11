@@ -1,3 +1,9 @@
+//      Run these in the terminal for new VS files
+//      npm init -y
+//      npm i express
+//      node index.js     
+//      npm i dotenv
+
 require('dotenv').config()
 
 const express = require ('express')
