@@ -3,6 +3,7 @@
 //      npm i express
 //      node index.js     
 //      npm i dotenv
+//      npm i react express-react-views
 
 require('dotenv').config()
 
@@ -12,7 +13,7 @@ const app = express ()
 app.use('/places', require('./controllers/places'))
 
 app.get('/', (req, res) => {
-    res.send('Hellow World!')
+    res.send('The PORT is over 9000!!')
 })
 
 app.get('*', (req, res) => {
