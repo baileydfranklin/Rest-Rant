@@ -20,15 +20,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('*', (req, res) => {
-    res.status(404).send(`
-        <body>
-            <h1>404 Page</h1>
-            <details>
-                <summary><b>What does this mean?</b></summary>
-                Page does not exist. Please return to the previous page!
-            </details>
-        </body>
-    `)
+    res.render('error404')
 })
 
 app.listen(process.env.PORT)
