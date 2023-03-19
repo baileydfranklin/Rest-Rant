@@ -1,18 +1,6 @@
 const router = require('express').Router()
 const places = require('../models/places.js')
 
-router.get('/new', (req, res) => {
-    res.render('places/new')
-})
-
-router.get('/', (req, res) => {
-    let places = []
-
-    res.render('places/index', { places })
-})
-
-module.exports = router
-
 router.post('/', (req, res) => {
     console.log(req.body)
     if (!req.body.pic) {
@@ -30,16 +18,40 @@ router.post('/', (req, res) => {
     res.redirect('/places')
   })
 
+router.get('/new', (req, res) => {
+    res.render('places/new')
+})
+
+router.get('/', (req, res) => {
+    let places = [{
+        name: 'Another One Bites The Crust',
+        city: 'Seattle',
+        state: 'WA',
+        cuisines: 'Italian',
+        pic: '/images/Photo3.avif'
+    }, {
+        name: 'Excuse My French Cafe',
+        city: 'Phoenix',
+        state: 'AZ',
+        cuisines: 'Coffee, Bakery, Breakfast',
+        pic: '/images/Photo4.avif'
+    }]
+
+    res.render('places/index', { places })
+})
+
 router.get('/:id', (req, res) => {
     let id = Number(req.params.id)
     if (isNaN(id)) {
         res.render('error404')
-    } else if (!places[id]) {
-        res.render('error404')
-    } else {
-        res.render('places/show', { place: places[id] })
     }
-})
+    else if (!places[id]) {
+        res.render('error404')
+    }
+    else {
+    res.render('places/show', { place: places[id] })
+    }
+  })
   
-  
-  
+
+  module.exports = router
