@@ -1,3 +1,4 @@
+//      https://github.com/eHoward1996/rest_rant
 //      Run these in the terminal for new VS files
 //      npm init -y
 //      npm i express
@@ -5,6 +6,7 @@
 //      npm i dotenv
 //      npm i react express-react-views
 //      npm i method-override
+//      npm i mongoose
 
 
 // Modules and Globals

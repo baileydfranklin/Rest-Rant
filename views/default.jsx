@@ -11,13 +11,13 @@ function Def (html) {
             <body>
                 <nav>
                     <ul>
-                        <li>
+                        <li id='listItem1'>
                             <a href='/'>Home</a>
                         </li>
-                        <li>
+                        <li id='listItem2'>
                             <a href='/places'>Places</a>
                         </li>
-                        <li>
+                        <li id='listItem3'>
                             <a href='/places/new'>Add Place</a>
                         </li>
                     </ul>
