@@ -1,98 +1,137 @@
 const router = require('express').Router()
-const places = require('../models/places.js')
+// const places = require('../models/places.js')
+let db = require('../models')
 
-router.post('/', (req, res) => {
-    console.log(req.body)
-    if (!req.body.pic) {
-      // Default image if one is not provided
-      req.body.pic = 'https://images.unsplash.com/photo-1458819714733-e5ab3d536722?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGdlbmVyYWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60'
-    }
-    if (!req.body.city) {
-      req.body.city = 'Anytown'
-    }
-    if (!req.body.state) {
-      req.body.state = 'USA'
-    }
+// Same
+router.get('/data/destroy', (req, res) => {
+  db.place_schema.deleteMany()
+    .then(() => { res.render('places/index', {}) })
+    .catch((err) => {
+      console.log(err)
+      res.render('error404')
+    })
+})
 
-    places.push(req.body)
-    res.redirect('/places')
-  })
-
+// Same
 router.get('/new', (req, res) => {
-    res.render('places/new')
+  res.render('places/new')
 })
 
-router.get('/', (req, res) => {
-    let places = [{
-        name: 'Another One Bites The Crust',
-        city: 'Seattle',
-        state: 'WA',
-        cuisines: 'Italian',
-        pic: '/images/Photo3.avif'
-    }, {
-        name: 'Excuse My French Cafe',
-        city: 'Phoenix',
-        state: 'AZ',
-        cuisines: 'Coffee, Bakery, Breakfast',
-        pic: '/images/Photo4.avif'
-    }]
-
-    res.render('places/index', { places })
+// Some differences
+router.get('/:id/edit', (req, res) => {
+  let id = Number(req.params.id)
+  if (isNaN(id)) {
+    res.render('error404')
+  }
+  else if (!places[id]) {
+    res.render('error404')
+  }
+  else {
+    res.render('places/edit', { place: places[id] })
+  }
 })
 
+// Same
+router.get('/:id/comment', (req, res) => {
+  db.place_schema.findById(req.params.id)
+    .then((place) => { res.render('places/comment', { place }) })
+    .catch((err) => {
+      console.log(err)
+      res.render('error404')
+    })
+})
+
+// Same
+router.post('/:id/comment', (req, res) => {
+  req.body.rant = req.body.rant === "on"
+  console.log(req.body)
+
+  db.place_schema.findById(req.params.id)
+    .then((place) => {
+      db.comment_schema.create(req.body)
+        .then((comment) => {
+          place.comments.push(comment.id)
+          place.save()
+            .then(() => {
+              res.redirect(`/places/${req.params.id}`)
+            })
+        })
+        .catch((err) => {
+          console.log(err)
+          res.render('error404')
+        })
+    })
+    .catch((err) => {
+      console.log(err)
+      res.render('error404')
+    })
+})
+
+// Some differences
 router.get('/:id', (req, res) => {
-    let id = Number(req.params.id)
-    if (isNaN(id)) {
-        res.render('error404')
-    }
-    else if (!places[id]) {
-        res.render('error404')
-    }
-    else {
-    res.render('places/show', { place: places[id], id })
-    }
-  })
-  
-  router.get('/:id/edit', (req, res) => {
-    let id = Number(req.params.id)
-    if (isNaN(id)) {
-        res.render('error404')
-    }
-    else if (!places[id]) {
-        res.render('error404')
-    }
-    else {
-      res.render('places/edit', { place: places[id] })
-    }
-  })
+  db.Place.findById(req.params.id)
+    .then(place => {
+      res.render('places/show', { place })
+    })
+    .catch(err => {
+      console.log(err)
+      res.render('error404')
+    })
+})
 
-  router.put('/:id', (req, res) => {
-    let id = Number(req.params.id)
-    if (isNaN(id)) {
-      res.render('error404')
-    }
-    else if (!places[id]) {
-      res.render('error404')
-    }
-    else {
-      res.redirect(`/places/${id}`)
-    }
-  })
+// Some differences
+router.delete('/:id', (req, res) => {
+  let id = Number(req.params.id)
+  if (isNaN(id)) {
+    res.render('error404')
+  }
+  else if (!places[id]) {
+    res.render('error404')
+  }
+  else {
+    places.splice(id, 1)
+    res.redirect('/places')
+  }
+})
 
-  router.delete('/:id', (req, res) => {
-    let id = Number(req.params.id)
-    if (isNaN(id)) {
+// Some differences
+router.put('/:id', (req, res) => {
+  let id = Number(req.params.id)
+  if (isNaN(id)) {
+    res.render('error404')
+  }
+  else if (!places[id]) {
+    res.render('error404')
+  }
+  else {
+    res.redirect(`/places/${id}`)
+  }
+})
+
+// Some differences
+router.get('/', (req, res) => {
+  db.Place.find()
+    .then((places) => {
+      res.render('places/index', { places })
+    })
+    .catch(err => {
+      console.log(err)
       res.render('error404')
-    }
-    else if (!places[id]) {
-      res.render('error404')
-    }
-    else {
-      places.splice(id, 1)
+    })
+})
+
+// Some differences
+router.post('/', (req, res) => {
+  db.Place.create(req.body)
+    .then(() => {
       res.redirect('/places')
-    }
-  })
-  
-  
+    })
+    .catch(err => {
+      console.log(err)
+      res.render('error404')
+    })
+})
+
+
 
   module.exports = router

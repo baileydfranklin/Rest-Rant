@@ -17,6 +17,7 @@ function edit_form (data) {
                                 value={data.place.name}
                                 required />
                         </div>
+
                         <div className='form-group col-sm-6'>
                             <label htmlFor='pic'>Place Picture</label>
                             <input
@@ -25,6 +26,7 @@ function edit_form (data) {
                                 id='pic'
                                 name='pic' />
                         </div>
+
                         <div className='form-group col-sm-6'>
                             <label htmlFor='city'>City</label>
                             <input
@@ -32,6 +34,7 @@ function edit_form (data) {
                                 id='city'
                                 name='city' />
                         </div>
+
                         <div className='form-group col-sm-6'>
                             <label htmlFor='state'>State</label>
                             <input
@@ -39,6 +42,7 @@ function edit_form (data) {
                                 id='state'
                                 name='state' />
                         </div>
+                        
                         <div className='form-group col-sm-6'>
                             <label htmlFor='cuisines'>Cuisines</label>
                             <input
