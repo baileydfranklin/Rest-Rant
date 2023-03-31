@@ -33,7 +33,7 @@ router.get('/:id/edit', (req, res) => {
 
 // Same
 router.get('/:id/comment', (req, res) => {
-  db.place_schema.findById(req.params.id)
+  db.Place.findById(req.params.id)
     .then((place) => { res.render('places/comment', { place }) })
     .catch((err) => {
       console.log(err)
@@ -45,10 +45,9 @@ router.get('/:id/comment', (req, res) => {
 router.post('/:id/comment', (req, res) => {
   req.body.rant = req.body.rant === "on"
   console.log(req.body)
-
-  db.place_schema.findById(req.params.id)
+  db.Place.findById(req.params.id)
     .then((place) => {
-      db.comment_schema.create(req.body)
+      db.Comment.create(req.body)
         .then((comment) => {
           place.comments.push(comment.id)
           place.save()
@@ -70,7 +69,9 @@ router.post('/:id/comment', (req, res) => {
 // Some differences
 router.get('/:id', (req, res) => {
   db.Place.findById(req.params.id)
+    .populate('comments')
     .then(place => {
+      console.log(place.comments)
       res.render('places/show', { place })
     })
     .catch(err => {

@@ -16,7 +16,7 @@ const mongoose = require('mongoose')
 const place_schema = new mongoose.Schema({
 
     name: { type: String, required: true },
-    pic: { type: String, default: 'http://placekitten.com/350/350' }
+    pic: { type: String, default: 'http://placekitten.com/350/350' },
     cuisines: { type: String, required: true },
     city: { type: String, required: 'Anytown' },
     state: { type: String, required: 'USA' },
@@ -24,7 +24,8 @@ const place_schema = new mongoose.Schema({
         type: Number,
         min: [1673, 'Surely not that old?!'],
         max: [new Date().getFullYear(), 'Hey, this year is in the future!']
-    }
+    },
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
 })
 
 place_schema.methods.showEstablished = function () {
