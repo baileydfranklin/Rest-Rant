@@ -1,23 +1,18 @@
 const db = require('../models')
 
-const place_seed_data = [
-    {
-        name: 'H-Thai-ML',
+db.Place.create ([{
+        name: 'Another One Bites The Crust',
         city: 'Seattle',
         state: 'WA',
-        cuisines: 'Thai, Pan-Asian',
-        pic: '/images/thai_food.avif',
-        founded: 1989
-    },
-    {
-        name: 'Coding Cat Cafe',
+        cuisines: 'Italian',
+        pic: '/images/Photo3.avif'
+    }, {
+        name: 'Excuse My French Cafe',
         city: 'Phoenix',
         state: 'AZ',
-        cuisines: 'Coffee, Bakery',
-        pic: '/images/coding_cafe.avif',
-        founded: 2020
-    }
-]
+        cuisines: 'Coffee, Bakery, Breakfast',
+        pic: '/images/Photo4.avif'
+    }])
 
 db.place_schema.create(place_seed_data)
     .then(() => {
