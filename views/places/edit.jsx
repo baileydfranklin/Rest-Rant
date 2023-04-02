@@ -51,6 +51,17 @@ function edit_form (data) {
                                 name='cuisines'
                                 required />
                         </div>
+
+                        <div className='form-group col-sm-6'>
+                            <label htmlFor='founded'>Founded</label>
+                            <input 
+                                className='form-control'
+                                id='founded'
+                                name='founded'
+                                value='founded'
+                            />
+                        </div>
+
                         <input
                             className='btn btn-primary'
                             type='submit'

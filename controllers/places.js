@@ -19,16 +19,13 @@ router.get('/new', (req, res) => {
 
 // Some differences
 router.get('/:id/edit', (req, res) => {
-  let id = Number(req.params.id)
-  if (isNaN(id)) {
+  db.Place.findById(req.params.id)
+  .then(place => {
+    res.render('places/edit', { place })
+  })
+  .catch(err => {
     res.render('error404')
-  }
-  else if (!places[id]) {
-    res.render('error404')
-  }
-  else {
-    res.render('places/edit', { place: places[id] })
-  }
+  })
 })
 
 // Same
@@ -43,8 +40,12 @@ router.get('/:id/comment', (req, res) => {
 
 // Same
 router.post('/:id/comment', (req, res) => {
-  req.body.rant = req.body.rant === "on"
   console.log(req.body)
+  if (req.body.rant) {
+    req.body.rant = true
+  }else {
+    req.body.rant = false
+  }
   db.Place.findById(req.params.id)
     .then((place) => {
       db.Comment.create(req.body)
@@ -82,31 +83,26 @@ router.get('/:id', (req, res) => {
 
 // Some differences
 router.delete('/:id', (req, res) => {
-  let id = Number(req.params.id)
-  if (isNaN(id)) {
+  db.Place.findByIdAndDelete(req.params.id)
+  .then(place => {
+    res.redirect(`/places`) // might need to add, "/${req.params.id}"
+  })
+  .catch(err => {
+    console.log('err', err)
     res.render('error404')
-  }
-  else if (!places[id]) {
-    res.render('error404')
-  }
-  else {
-    places.splice(id, 1)
-    res.redirect('/places')
-  }
+  })
 })
 
 // Some differences
 router.put('/:id', (req, res) => {
-  let id = Number(req.params.id)
-  if (isNaN(id)) {
+  db.Place.findByIdAndUpdate(req.params.id, req.body)
+  .then(() => {
+    res.redirect(`/places/${req.params.id}`)
+  })
+  .catch(err => {
+    console.log('err', err)
     res.render('error404')
-  }
-  else if (!places[id]) {
-    res.render('error404')
-  }
-  else {
-    res.redirect(`/places/${id}`)
-  }
+  })
 })
 
 // Some differences
