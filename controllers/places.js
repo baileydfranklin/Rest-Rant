@@ -84,8 +84,8 @@ router.get('/:id', (req, res) => {
 // Some differences
 router.delete('/:id', (req, res) => {
   db.Place.findByIdAndDelete(req.params.id)
-  .then(place => {
-    res.redirect(`/places`) // might need to add, "/${req.params.id}"
+  .then((place) => {
+    res.redirect(`/places`) 
   })
   .catch(err => {
     console.log('err', err)

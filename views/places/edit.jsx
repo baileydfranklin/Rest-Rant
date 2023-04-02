@@ -58,14 +58,14 @@ function edit_form (data) {
                                 className='form-control'
                                 id='founded'
                                 name='founded'
-                                value='founded'
+                                value={data.place.founded}
                             />
                         </div>
 
                         <input
                             className='btn btn-primary'
                             type='submit'
-                            value='Add Place' />
+                            value='Update Place' />
                     </div>
                 </form>
           </main>
