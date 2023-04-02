@@ -93,6 +93,20 @@ router.delete('/:id', (req, res) => {
   })
 })
 
+router.delete('/:pid/comment/:cid', (req, res) => {
+  db.Place.findById(req.params.pid)
+    .then((place) => {
+      db.Comment.findByIdAndDelete(req.params.cid)
+        .then(() => {
+          res.redirect(`/places/${req.params.pid}`) 
+        })
+    })
+    .catch(err => {
+      console.log('err', err)
+      res.render('error404')
+    })
+})
+
 // Some differences
 router.put('/:id', (req, res) => {
   db.Place.findByIdAndUpdate(req.params.id, req.body)

@@ -92,9 +92,10 @@ function show(data) {
                         <div className="row">
                             <div className="col-sm-4"></div>
                             <div className="col-sm-4">
-                                <h3>Comments</h3>
+                                <b><u><h3>Comments</h3></u></b>
+                                    <br/>
                             </div>
-                            <div className="col-sm-4" border>
+                            <div className="col-sm-4">
                                 <a href={`/places/${data.place.id}/comment`} className="btn btn-primary">
                                     Add your review!
                                 </a>
